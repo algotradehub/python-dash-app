@@ -1,0 +1,21 @@
+
+services:
+  redis:
+    image: redis.latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  writer:
+    build: ./writer
+    container_name: writer
+    depends_on:
+      - redis
+
+  dash_app:
+    build: ./reader
+    container_name: dash_app
+    ports:
+      - "8050:8050"
+    depends_on:
+      - redis
